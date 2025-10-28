@@ -1,6 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const express = require("express");
 const ServiceBroker = require("./broker/broker");
 ServiceBroker.options.started = async function (broker) {
     console.log("callback");

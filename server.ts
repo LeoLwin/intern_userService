@@ -1,4 +1,3 @@
-const express = require("express");
 const ServiceBroker = require("./broker/broker");
 
 ServiceBroker.options.started = async function (broker: any) {

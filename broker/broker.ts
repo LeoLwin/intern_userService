@@ -4,14 +4,15 @@ let theBroker = new Moleculer.ServiceBroker({
   namespace: "StudentManageMentSystem",
   nodeID: "userService",
   transporter: {
-    type: "Redis",
+    type: "Redis", 
     options: {
-      host: "127.0.0.1",
-      port: 6379,
-      password: "",
+      host: "redis-17181.c8.us-east-1-3.ec2.redns.redis-cloud.com",
+      port: 17181,
+      password: "F4H39hOAguWlvxw4MWj6TTBVZlV54wXy",
       db: 0,
     },
   },
+  
   // transporter: {
   //   type: "TCP",
   //   options: {

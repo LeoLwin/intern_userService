@@ -10,6 +10,7 @@ let theBroker = new Moleculer.ServiceBroker({
       port: 17181,
       password: "F4H39hOAguWlvxw4MWj6TTBVZlV54wXy",
       db: 0,
+      tls: {},
     },
   },
   

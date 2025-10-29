@@ -1,5 +1,12 @@
 const Moleculer = require("moleculer");
 
+console.log("Connecting to Redis with environment variables:", {
+  host: process.env.RedistHost,
+  port: process.env.RedisPort,
+  password: process.env.RedisPassword,
+  // Avoid logging sensitive information like passwords in production
+});
+
 let theBroker = new Moleculer.ServiceBroker({
   namespace: "StudentManageMentSystem",
   nodeID: "userService",

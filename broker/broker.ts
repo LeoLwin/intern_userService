@@ -14,13 +14,12 @@ let theBroker = new Moleculer.ServiceBroker({
     // },
 
     options: {
-      host: "selected-longhorn-77963-gcp-usc1-search.upstash.io",
-      port: 6379,
-      password: "F4H39hOAguWlvxw4MWj6TTBVZlV54wXy",
+      host: process.env.RedistHost,
+      port: process.env.RedisPort,
+      password: process.env.RedisPassword,
       db: 0,
       tls: {},
-    }
-
+    },
   },
 
   // transporter: {

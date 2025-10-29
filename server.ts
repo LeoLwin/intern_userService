@@ -15,6 +15,7 @@ ServiceBroker.start().then(async () => {
   // console.log("Result : ", result)
 }).then(()=>{
   const app = express();
+  console.log("Something fix");
 
 
   // app.use("/", (req: Request, res: Response) => {

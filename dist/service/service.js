@@ -5,10 +5,11 @@ const userService = {
     actions: {
         list: {
             async handler(ctx) {
-                return { 'mesasge': "This is sms user" };
+                console.log("this is sms user service");
+                return { mesasge: "This is sms user123" };
             },
-        }
-    }
+        },
+    },
 };
 module.exports = userService;
 //# sourceMappingURL=service.js.map

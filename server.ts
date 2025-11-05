@@ -10,10 +10,10 @@ ServiceBroker.loadService(__dirname + "/service/service.js");
 ServiceBroker.start().then(async () => {
   console.log("Started");
 
-  
+
   // const result: any = await ServiceBroker.call("sms.user.list");
   // console.log("Result : ", result)
-}).then(()=>{
+}).then(() => {
   const app = express();
   console.log("Something fix");
 
@@ -22,6 +22,10 @@ ServiceBroker.start().then(async () => {
   //     console.log('Hello this is nodejs project')
   //     res.json("This is testing");
   // });
+
+  app.get("/", (req: any, res: any) => {
+    res.send("Hello, this is the Express server running alongside Moleculer!");
+  })
 
   const PORT = process.env.PORT || 8000;
   app.listen(PORT, () => {

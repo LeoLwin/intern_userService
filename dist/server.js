@@ -20,6 +20,7 @@ ServiceBroker.start().then(async () => {
     //     res.json("This is testing");
     // });
     app.get("/", (req, res) => {
+        console.log("hello");
         res.send("Hello, this is the Express server running alongside Moleculer!");
     });
     const PORT = process.env.PORT || 8000;

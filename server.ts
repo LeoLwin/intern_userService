@@ -12,7 +12,6 @@ ServiceBroker.loadService(__dirname + "/service/service.js");
 
 ServiceBroker.start().then(async () => {
   console.log("Started");
-
   connectToDatabase()
 
   // const result: any = await ServiceBroker.call("sms.user.list");
@@ -28,6 +27,7 @@ ServiceBroker.start().then(async () => {
   // });
 
   app.get("/", (req: any, res: any) => {
+    console.log("hello")
     res.send("Hello, this is the Express server running alongside Moleculer!");
   })
 

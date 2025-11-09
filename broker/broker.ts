@@ -2,7 +2,7 @@ const Moleculer = require("moleculer");
 require("dotenv").config();
 let theBroker = new Moleculer.ServiceBroker({
   namespace: "StudentManageMentSystem",
-  nodeID: "userServices",
+  nodeID: "userServices"+ Math.floor(Math.random() * 10000),
   transporter: {
     type: "Redis",
     options: {

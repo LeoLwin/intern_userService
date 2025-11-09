@@ -45,7 +45,9 @@
   "include": [
     "server.ts",
     "broker/**/*.ts",
-    "service/**/*.ts"
+    "service/**/*.ts",
+    "helper/**/*.ts",
+    "model/**/*.ts"
   ],
   "exclude": [
     "node_modules",

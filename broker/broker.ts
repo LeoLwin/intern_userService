@@ -2,7 +2,7 @@ const Moleculer = require("moleculer");
 require("dotenv").config();
 let theBroker = new Moleculer.ServiceBroker({
   namespace: "StudentManageMentSystem",
-  nodeID: "userService",
+  nodeID: "userServices",
   transporter: {
     type: "Redis",
     options: {
@@ -21,3 +21,4 @@ let theBroker = new Moleculer.ServiceBroker({
 });
 
 module.exports = theBroker;
+

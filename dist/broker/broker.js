@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const Moleculer = require("moleculer");
 require("dotenv").config();
 let theBroker = new Moleculer.ServiceBroker({
-    namespace: "StudentManageMentSystem",
+    namespace: "StudentManageMentSystem123456789",
     nodeID: "userServices" + Math.floor(Math.random() * 10000),
     transporter: {
         type: "Redis",

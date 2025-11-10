@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const Moleculer = require("moleculer");
 const User = require("../model/userModel");
+const Respose = require("../helper/responseStatus");
 const userService = {
     name: "sms.user",
     actions: {
@@ -10,11 +11,11 @@ const userService = {
             async handler(ctx) {
                 try {
                     const users = await User.find(); // get all users from MongoDB
-                    return { message: "User list fetched", users };
+                    return Respose.OK(users, "Users fetched successfully");
                 }
                 catch (error) {
                     console.error("Error fetching users:", error.message);
-                    return { message: "Error fetching users", error: error.message };
+                    return Respose.UNKNOWN(error.message);
                 }
             },
         },

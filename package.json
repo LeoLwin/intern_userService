@@ -1,0 +1,27 @@
+{
+  "name": "endpoint",
+  "version": "1.0.0",
+  "description": "Endpoint",
+  "main": "server.js",
+  "scripts": {
+    "test": "nodemon ./dist/server.js"
+  },
+  "author": "Kaung Htet Lwin",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^17.2.3",
+    "express": "^5.1.0",
+    "ioredis": "^5.8.2",
+    "moleculer": "^0.14.35",
+    "moleculer-ts": "^2.0.6",
+    "mongoose": "^8.19.3",
+    "nodemon": "^3.1.10"
+  },
+  "devDependencies": {
+    "@types/dotenv": "^6.1.1",
+    "@types/express": "^5.0.4",
+    "@types/mongodb": "^4.0.6",
+    "@types/node": "^24.10.1",
+    "typescript": "^5.9.3"
+  }
+}

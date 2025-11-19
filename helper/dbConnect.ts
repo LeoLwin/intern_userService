@@ -1,19 +1,20 @@
 import mongoose from "mongoose";
-import * as dotenv from "dotenv";
-dotenv.config();
+import config from "../config/config"
 
-const uri = process.env.MONGO_URI; // your MongoDB Atlas URI
+const uri = config.mongoUri; // your MongoDB Atlas URI
+
 
  const connectToDatabase = async () => {
+  console.log("Mongo URI:", uri);
   if (!uri) {
   throw new Error("MONGO_URI is not defined in environment variables!");
 }
 
   try {
-    await mongoose.connect(uri, {
-      dbName: "blog", // your database name
+    const connection = await mongoose.connect(uri, {
+      dbName: "blog",
     });
-    console.log("Connected to MongoDB via Mongoose");
+    // console.log("Connected to MongoDB via Mongoose",connection.Error);
   } catch (error) {
     console.error(" MongoDB connection error:", error);
     throw error;
@@ -21,3 +22,7 @@ const uri = process.env.MONGO_URI; // your MongoDB Atlas URI
 };
 
 export default  connectToDatabase;
+
+
+
+

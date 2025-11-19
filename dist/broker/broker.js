@@ -40,6 +40,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const moleculer_1 = require("moleculer");
 const dotenv = __importStar(require("dotenv"));
 const config_1 = __importDefault(require("../config/config"));
+console.log("Redis Config:", {
+    host: config_1.default.redis.host,
+    port: Number(config_1.default.redis.port),
+    password: config_1.default.redis.password,
+    db: 0,
+    // tls: {},
+});
 dotenv.config();
 let theBroker = new moleculer_1.ServiceBroker({
     namespace: "BlogErina",
@@ -52,7 +59,7 @@ let theBroker = new moleculer_1.ServiceBroker({
             port: Number(config_1.default.redis.port),
             password: config_1.default.redis.password,
             db: 0,
-            tls: {},
+            // tls: {},
         },
     },
     cacher: "Redis",

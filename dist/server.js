@@ -21,6 +21,6 @@ broker_1.default.loadService(__dirname + "/service/service");
 broker_1.default.start().then(() => __awaiter(void 0, void 0, void 0, function* () {
     console.log("Started");
     yield (0, dbConnect_1.default)();
-    // const result: any = await theBroker.call("blog.list");
-    // console.log("Result : ", result);
+    const result = yield broker_1.default.call("blog.list");
+    console.log("Result : ", result);
 }));

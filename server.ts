@@ -13,6 +13,6 @@ ServiceBroker.start().then(async () => {
   console.log("Started");
  await connectToDatabase();
 
-  // const result: any = await ServiceBroker.call("blog.list",{ current: 1, limit: 10 });
-  // console.log("Result : ", result);
+  const result: any = await ServiceBroker.call("blog.list",{ current: 1, limit: 10 });
+  console.log("Result : ", result);
 });

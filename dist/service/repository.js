@@ -8,19 +8,19 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-const dbConnect_1 = __importDefault(require("./helper/dbConnect"));
-const broker_1 = __importDefault(require("./broker/broker"));
-broker_1.default.start().then(() => {
-    console.log("Broker is ready");
+// service/blog/blog.repository.ts
+const blogModel_1 = require("../model/blogModel");
+const countBlogs = () => __awaiter(void 0, void 0, void 0, function* () {
+    return blogModel_1.Blog.countDocuments();
 });
-broker_1.default.loadService(__dirname + "/service/service");
-broker_1.default.start().then(() => __awaiter(void 0, void 0, void 0, function* () {
-    console.log("Started");
-    yield (0, dbConnect_1.default)();
-    const result = yield broker_1.default.call("blog.list", { current: 1, limit: 10 });
-    console.log("Result : ", result);
-}));
+const findBlogs = (page, perPage) => __awaiter(void 0, void 0, void 0, function* () {
+    return blogModel_1.Blog.find()
+        .skip((page - 1) * perPage)
+        .limit(perPage)
+        .sort({ createdAt: -1 });
+});
+exports.default = {
+    countBlogs,
+    findBlogs
+};

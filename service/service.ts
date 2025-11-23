@@ -2,6 +2,7 @@ import Moleculer from "moleculer";
 import { Blog } from "../model/blogModel";
 import Response from "../helper/responseStatus";
 import { createType, listType, updateType } from "../type/type";
+import { listBlogs } from "./logic";
 
 const blogService: Moleculer.ServiceSchema = {
   name: "blog",
@@ -14,36 +15,41 @@ const blogService: Moleculer.ServiceSchema = {
       },
       async handler(ctx: Moleculer.Context<listType>) {
         try {
-          const { current = 1, limit = 10 } = ctx.params;
+          // const { current = 1, limit = 10 } = ctx.params;
+
+          const { current, limit } = ctx.params;
           console.log("List Params : ", { current, limit });
 
-          const page = Math.max(Number(current), 1);
-          const perPage = Math.max(Number(limit), 1);
-
-          const total = await Blog.countDocuments();
-          console.log("Total Blogs:", total);
-          if(total === 0){
-            return Response.NOT_FOUND("No blogs found");
-          }
-
-          const listResult = await Blog.find()
-            .skip((page - 1) * perPage)
-            .limit(perPage)
-            .sort({ createdAt: -1 });
-
-          const data = {
-            by: listResult,
-            pagination: {
-              current: page,
-              limit: perPage,
-              rowsPerPage: Math.ceil(total / perPage),
-              total,
-            },
-          };
+          return await listBlogs(current, limit);
 
 
-          // const blogs = await Blog.find();
-          return Response.OK(data, "Blogs fetched successfully",);
+          // const page = Math.max(Number(current), 1);
+          // const perPage = Math.max(Number(limit), 1);
+
+          // const total = await Blog.countDocuments();
+          // console.log("Total Blogs:", total);
+          // if(total === 0){
+          //   return Response.NOT_FOUND("No blogs found");
+          // }
+
+          // const listResult = await Blog.find()
+          //   .skip((page - 1) * perPage)
+          //   .limit(perPage)
+          //   .sort({ createdAt: -1 });
+
+          // const data = {
+          //   by: listResult,
+          //   pagination: {
+          //     current: page,
+          //     limit: perPage,
+          //     rowsPerPage: Math.ceil(total / perPage),
+          //     total,
+          //   },
+          // };
+
+
+          // // const blogs = await Blog.find();
+          // return Response.OK(data, "Blogs fetched successfully",);
         } catch (error: any) {
           console.error("Error fetching blogs:", error.message);
           return Response.UNKNOWN(error.message);

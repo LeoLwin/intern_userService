@@ -30,11 +30,37 @@ const blogService = {
     actions: {
         // List all blogs
         list: {
+            params: {
+                current: "number",
+                limit: "number",
+            },
             handler(ctx) {
                 return __awaiter(this, void 0, void 0, function* () {
                     try {
-                        const blogs = yield blogModel_1.Blog.find();
-                        return responseStatus_1.default.OK(blogs, "Blogs fetched successfully");
+                        const { current = 1, limit = 10 } = ctx.params;
+                        console.log("List Params : ", { current, limit });
+                        const page = Math.max(Number(current), 1);
+                        const perPage = Math.max(Number(limit), 1);
+                        const total = yield blogModel_1.Blog.countDocuments();
+                        console.log("Total Blogs:", total);
+                        if (total === 0) {
+                            return responseStatus_1.default.NOT_FOUND("No blogs found");
+                        }
+                        const listResult = yield blogModel_1.Blog.find()
+                            .skip((page - 1) * perPage)
+                            .limit(perPage)
+                            .sort({ createdAt: -1 });
+                        const data = {
+                            by: listResult,
+                            pagination: {
+                                current: page,
+                                limit: perPage,
+                                rowsPerPage: Math.ceil(total / perPage),
+                                total,
+                            },
+                        };
+                        // const blogs = await Blog.find();
+                        return responseStatus_1.default.OK(data, "Blogs fetched successfully");
                     }
                     catch (error) {
                         console.error("Error fetching blogs:", error.message);

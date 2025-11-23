@@ -1,17 +1,49 @@
 import Moleculer from "moleculer";
 import { Blog } from "../model/blogModel";
 import Response from "../helper/responseStatus";
-import { createType, updateType } from "../type/type";
+import { createType, listType, updateType } from "../type/type";
 
 const blogService: Moleculer.ServiceSchema = {
   name: "blog",
   actions: {
     // List all blogs
     list: {
-      async handler(ctx: Moleculer.Context<{}>) {
+      params: {
+        current: "number",
+        limit: "number",
+      },
+      async handler(ctx: Moleculer.Context<listType>) {
         try {
-          const blogs = await Blog.find(); 
-          return Response.OK(blogs, "Blogs fetched successfully",);
+          const { current = 1, limit = 10 } = ctx.params;
+          console.log("List Params : ", { current, limit });
+
+          const page = Math.max(Number(current), 1);
+          const perPage = Math.max(Number(limit), 1);
+
+          const total = await Blog.countDocuments();
+          console.log("Total Blogs:", total);
+          if(total === 0){
+            return Response.NOT_FOUND("No blogs found");
+          }
+
+          const listResult = await Blog.find()
+            .skip((page - 1) * perPage)
+            .limit(perPage)
+            .sort({ createdAt: -1 });
+
+          const data = {
+            by: listResult,
+            pagination: {
+              current: page,
+              limit: perPage,
+              rowsPerPage: Math.ceil(total / perPage),
+              total,
+            },
+          };
+
+
+          // const blogs = await Blog.find();
+          return Response.OK(data, "Blogs fetched successfully",);
         } catch (error: any) {
           console.error("Error fetching blogs:", error.message);
           return Response.UNKNOWN(error.message);
@@ -27,10 +59,10 @@ const blogService: Moleculer.ServiceSchema = {
       async handler(ctx: Moleculer.Context<createType>) {
         try {
           const { id } = ctx.params;
-          
-           if(!id){
+
+          if (!id) {
             return Response.INVALID_ARGUMENT("ID parameter is required");
-           }
+          }
 
           const blog = await Blog.findById(id);
 
@@ -120,4 +152,4 @@ const blogService: Moleculer.ServiceSchema = {
   },
 };
 
-export default  blogService;
+export default blogService;

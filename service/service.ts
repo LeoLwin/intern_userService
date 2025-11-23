@@ -2,7 +2,7 @@ import Moleculer from "moleculer";
 import { Blog } from "../model/blogModel";
 import Response from "../helper/responseStatus";
 import { createType, listType, updateType } from "../type/type";
-import { listBlogs } from "./logic";
+import logic from "./logic";
 
 const blogService: Moleculer.ServiceSchema = {
   name: "blog",
@@ -15,12 +15,10 @@ const blogService: Moleculer.ServiceSchema = {
       },
       async handler(ctx: Moleculer.Context<listType>) {
         try {
-          // const { current = 1, limit = 10 } = ctx.params;
-
           const { current, limit } = ctx.params;
           console.log("List Params : ", { current, limit });
-
-          return await listBlogs(current, limit);
+          const result = await logic.listBlogs(current, limit);
+          return result;
 
 
           // const page = Math.max(Number(current), 1);
@@ -94,11 +92,11 @@ const blogService: Moleculer.ServiceSchema = {
         ctx: Moleculer.Context<updateType>
       ) {
         const { title, content } = ctx.params;
-        console.log("Params : ", { title, content });
         try {
-          const blog = new Blog({ title, content });
-          await blog.save();
-          return { message: "Blog created", blog };
+          const result = await logic.createBlog(title, content);
+          
+          console.log(" Result 98" ,result)
+          return result;
         } catch (error: any) {
           console.error("Error creating blog:", error.message);
           return { message: "Error creating blog", error: error.message };

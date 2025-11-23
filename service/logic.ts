@@ -1,11 +1,14 @@
 // service/blog/blog.logic.ts
 import repo from "./repository";
 import Response from "../helper/responseStatus";
-export async function listBlogs(current = 1, limit = 10) {
+
+
+const listBlogs= async(current = 1, limit = 10)=> {
   const page = Math.max(Number(current), 1);
   const perPage = Math.max(Number(limit), 1);
 
   const total = await repo.countBlogs();
+
   if (total === 0) {
     return Response.NOT_FOUND("No blogs found");
   }
@@ -23,4 +26,23 @@ export async function listBlogs(current = 1, limit = 10) {
   };
 
   return Response.OK(data, "Blogs fetched successfully");
+}
+
+
+const createBlog = async (title: string, content: string) => {
+  return repo.runInTransaction(async (session) => {
+    const blog = await repo.creatBlog(title, content);
+    console.log("Created Blog :", blog);
+    if (!blog || !blog._id) {
+      return Response.NOT_IMPLEMENTED("Blog could not be created");
+    }
+    return Response.OK(blog, "Blog created successfully");
+  });
+};
+
+
+
+export default{
+    listBlogs,
+    createBlog
 }

@@ -25,7 +25,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const blogModel_1 = require("../model/blogModel");
 const responseStatus_1 = __importDefault(require("../helper/responseStatus"));
-const logic_1 = require("./logic");
+const logic_1 = __importDefault(require("./logic"));
 const blogService = {
     name: "blog",
     actions: {
@@ -38,10 +38,10 @@ const blogService = {
             handler(ctx) {
                 return __awaiter(this, void 0, void 0, function* () {
                     try {
-                        // const { current = 1, limit = 10 } = ctx.params;
                         const { current, limit } = ctx.params;
                         console.log("List Params : ", { current, limit });
-                        return yield (0, logic_1.listBlogs)(current, limit);
+                        const result = yield logic_1.default.listBlogs(current, limit);
+                        return result;
                         // const page = Math.max(Number(current), 1);
                         // const perPage = Math.max(Number(limit), 1);
                         // const total = await Blog.countDocuments();
@@ -106,11 +106,10 @@ const blogService = {
             handler(ctx) {
                 return __awaiter(this, void 0, void 0, function* () {
                     const { title, content } = ctx.params;
-                    console.log("Params : ", { title, content });
                     try {
-                        const blog = new blogModel_1.Blog({ title, content });
-                        yield blog.save();
-                        return { message: "Blog created", blog };
+                        const result = yield logic_1.default.createBlog(title, content);
+                        console.log(" Result 98", result);
+                        return result;
                     }
                     catch (error) {
                         console.error("Error creating blog:", error.message);
